@@ -1,0 +1,4293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="cNHvl79LfU8CI-Y91gPE-Vo4PZK90Oe90kInlyk_KU8" />
+<title>Gargi Academy Quiz Arena</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    color:white;
+    background:linear-gradient(135deg,#06142e,#124d82,#061020);
+}
+
+header{
+    background:#020916;
+    padding:18px;
+    text-align:center;
+    font-size:25px;
+    font-weight:bold;
+    box-shadow:0 3px 15px #000;
+}
+
+.container{
+    width:95%;
+    max-width:1100px;
+    margin:25px auto;
+}
+
+.card{
+    background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:18px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,.3);
+}
+
+.hidden{
+    display:none!important;
+}
+
+.title{
+    text-align:center;
+    font-size:30px;
+}
+
+input,select{
+    width:100%;
+    padding:13px;
+    margin:7px 0;
+    border:0;
+    border-radius:10px;
+    outline:none;
+}
+
+input[type=checkbox]{
+    width:auto;
+}
+
+button{
+    border:0;
+    padding:13px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+    margin:5px;
+    background:#00c6ff;
+    color:#00111f;
+}
+
+button:hover{
+    filter:brightness(1.1);
+    transform:translateY(-2px);
+}
+
+.success{
+    background:#20bf6b;
+    color:white;
+}
+
+.danger{
+    background:#ff4757;
+    color:white;
+}
+
+.gray{
+    background:#718093;
+    color:white;
+}
+
+.gold{
+    background:#ffd32a;
+    color:#222;
+}
+
+.purple{
+    background:#9b59b6;
+    color:white;
+}
+
+.message{
+    padding:12px;
+    border-radius:10px;
+    margin:10px 0;
+    display:none;
+}
+
+.error{
+    background:#ff4757;
+}
+
+.ok{
+    background:#20bf6b;
+}
+
+.note{
+    padding:13px;
+    background:rgba(255,211,42,.15);
+    border-radius:10px;
+    margin:10px 0;
+}
+
+.required-label{
+    display:block;
+    margin-top:12px;
+    font-weight:bold;
+}
+
+.menu-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+}
+
+.menu-btn{
+    width:100%;
+    min-height:90px;
+    font-size:18px;
+    color:white;
+    background:linear-gradient(135deg,#00c6ff,#0072ff);
+}
+
+.menu-btn small{
+    display:block;
+    margin-top:7px;
+    font-weight:normal;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:12px;
+}
+
+.stat{
+    background:rgba(255,255,255,.1);
+    padding:18px;
+    border-radius:15px;
+    text-align:center;
+}
+
+.stat b{
+    display:block;
+    font-size:25px;
+    margin-top:5px;
+}
+
+.house-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:18px;
+}
+
+.house{
+    padding:30px 15px;
+    border-radius:20px;
+    text-align:center;
+    cursor:pointer;
+    border:3px solid transparent;
+}
+
+.house:hover{
+    border-color:white;
+}
+
+.blue{
+    background:#1479ff;
+}
+
+.red{
+    background:#e84118;
+}
+
+.yellow{
+    background:#fbc531;
+    color:#222;
+}
+
+.white{
+    background:#f5f6fa;
+    color:#222;
+}
+
+.house-count{
+    font-size:45px;
+    font-weight:bold;
+    margin:10px;
+}
+
+.question-box{
+    padding:25px;
+    background:rgba(255,255,255,.07);
+    border-radius:18px;
+}
+
+.option{
+    display:block;
+    width:100%;
+    text-align:left;
+    background:white;
+    color:#111;
+    margin:10px 0;
+}
+
+.option.correct{
+    background:#20bf6b;
+    color:white;
+}
+
+.option.wrong{
+    background:#ff4757;
+    color:white;
+}
+
+/* Added feature styles */
+.admin-badge{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:999px;
+    background:#ffd32a;
+    color:#222;
+    font-weight:bold;
+    font-size:13px;
+}
+.cooldown-box{
+    background:rgba(255,211,42,.16);
+    border:1px solid rgba(255,211,42,.45);
+    padding:14px;
+    border-radius:14px;
+    margin:12px 0;
+}
+.admin-card{
+    border:1px solid rgba(255,211,42,.4);
+}
+.submission-card{
+    background:rgba(255,255,255,.08);
+    border-radius:14px;
+    padding:15px;
+    margin:10px 0;
+}
+.anim-overlay{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(0,0,0,.82);
+    animation:fadeIn .25s ease;
+}
+.anim-box{
+    text-align:center;
+    padding:35px;
+    border-radius:24px;
+    background:linear-gradient(135deg,#102040,#173d68);
+    box-shadow:0 0 50px rgba(0,198,255,.35);
+    animation:pop .45s ease;
+    max-width:90%;
+}
+.anim-emoji{
+    font-size:80px;
+    animation:bounce 1s infinite;
+}
+.anim-title{
+    font-size:42px;
+    margin:10px 0;
+}
+.win-title{color:#20bf6b;}
+.lose-title{color:#ff4757;}
+.admin-hi{
+    font-size:44px;
+    font-weight:900;
+    text-align:center;
+    padding:35px 10px;
+    animation:pop 1s ease, glow 1.5s infinite alternate;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pop{0%{transform:scale(.5);opacity:0}80%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+@keyframes glow{from{text-shadow:0 0 8px #00c6ff}to{text-shadow:0 0 28px #ffd32a,0 0 45px #00c6ff}}
+
+
+.person-image{
+    display:block;
+    width:100%;
+    max-width:400px;
+    max-height:350px;
+    object-fit:contain;
+    margin:20px auto;
+    border-radius:18px;
+    border:3px solid white;
+    background:white;
+}
+
+.leader-row{
+    display:grid;
+    grid-template-columns:60px 1fr 140px;
+    gap:10px;
+    align-items:center;
+    padding:13px;
+    margin:7px 0;
+    background:rgba(255,255,255,.08);
+    border-radius:10px;
+}
+
+.top{
+    background:rgba(255,211,42,.25);
+}
+
+.chat-layout{
+    display:grid;
+    grid-template-columns:250px 1fr;
+    gap:15px;
+}
+
+.friend-list{
+    background:rgba(255,255,255,.07);
+    padding:10px;
+    border-radius:15px;
+}
+
+.friend-item{
+    padding:12px;
+    margin:6px 0;
+    background:rgba(255,255,255,.08);
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.friend-item:hover{
+    background:rgba(0,198,255,.3);
+}
+
+.messages{
+    height:320px;
+    overflow-y:auto;
+    background:#07101e;
+    padding:12px;
+    border-radius:12px;
+}
+
+.msg{
+    max-width:75%;
+    padding:10px;
+    margin:7px 0;
+    border-radius:12px;
+}
+
+.mine{
+    margin-left:auto;
+    background:#0072ff;
+}
+
+.theirs{
+    background:#34495e;
+}
+
+@media(max-width:700px){
+    .chat-layout{
+        grid-template-columns:1fr;
+    }
+
+    .leader-row{
+        grid-template-columns:45px 1fr 100px;
+    }
+}
+
+/* ===== ADMIN + REVIEW UPGRADE ===== */
+.admin-dashboard{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:16px 0}
+.admin-stat{padding:18px;border-radius:16px;background:linear-gradient(135deg,#182848,#4b6cb7);color:white;text-align:center;box-shadow:0 8px 22px #0003}
+.admin-stat .num{font-size:28px;font-weight:900;margin-top:6px}
+.admin-section{margin-top:18px;padding:18px;border-radius:18px;background:#f8f9ff;border:1px solid #e3e6ff}
+.admin-section h2{margin-top:0}
+.admin-table-wrap{overflow:auto;border-radius:14px}
+.admin-table{width:100%;border-collapse:collapse;min-width:760px;background:white}
+.admin-table th,.admin-table td{padding:11px;border-bottom:1px solid #e6e6e6;text-align:left}
+.admin-table th{background:#182848;color:white}
+.status-pending{background:#fff3cd;color:#7a5a00;padding:6px 10px;border-radius:999px;font-weight:800;display:inline-block}
+.status-approved{background:#d4edda;color:#155724;padding:6px 10px;border-radius:999px;font-weight:800;display:inline-block}
+.status-rejected{background:#f8d7da;color:#721c24;padding:6px 10px;border-radius:999px;font-weight:800;display:inline-block}
+.review-card{background:white;border:1px solid #e5e7eb;border-radius:16px;padding:16px;margin:10px 0;box-shadow:0 5px 16px #0001}
+.rating{font-size:20px;letter-spacing:2px}
+.review-label{font-weight:800;color:#182848}
+.question-admin-card{background:white;border:1px solid #dfe6ff;border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 5px 16px #0001}
+.admin-toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.admin-toolbar button{margin:2px}
+
+</style>
+</head>
+
+<body>
+
+<header>
+🏫 GARGI ACADEMY QUIZ ARENA
+</header>
+
+<div class="container">
+
+<!-- =====================================================
+AUTH
+===================================================== -->
+
+<section id="authPage">
+
+<div class="card">
+
+<h1 class="title">🎮 Gargi Academy Quiz Arena</h1>
+
+<div id="message" class="message"></div>
+
+<div style="text-align:center">
+<button onclick="showRegister()">📝 Register</button>
+<button onclick="showLogin()">🔐 Login</button>
+
+<button class="gold" onclick="showAdminLogin()">👑 Admin Login</button>
+</div>
+
+</div>
+
+
+<!-- STUDENT REGISTER -->
+
+<div class="card" id="registerBox">
+
+<h2>📝 Student Registration</h2>
+
+<div class="note">
+🎓 <b>Only Class 8 and Class 9 students are allowed.</b>
+<br><br>
+⚠️ <b>All options are compulsory.</b>
+</div>
+
+<label class="required-label">Full Name with Surname *</label>
+<input id="regName" placeholder="Enter full name with surname">
+
+<label class="required-label">Class *</label>
+
+<select id="regClass">
+<option value="">-- Select Class --</option>
+<option value="8">Class 8</option>
+<option value="9">Class 9</option>
+</select>
+
+<label class="required-label">Roll Number *</label>
+<input id="regRoll" placeholder="Enter roll number">
+
+<label class="required-label">School Name *</label>
+<input id="regSchool" placeholder="Enter school name">
+
+<label style="display:block;margin:15px 0;font-weight:bold">
+<input type="checkbox" id="gargiConfirm">
+I confirm that I am a student of Gargi Academy. *
+</label>
+
+<button class="success" onclick="registerStudent()">
+Create Student Account
+</button>
+
+<button class="gray" onclick="showTeacherRegister()">
+👨‍🏫 Teacher Registration
+</button>
+
+<button class="gray" onclick="showLogin()">
+Already Registered? Login
+</button>
+
+</div>
+
+
+<!-- TEACHER REGISTER -->
+
+<div class="card hidden" id="teacherRegisterBox">
+
+<h2>👨‍🏫 Teacher Registration</h2>
+
+<div class="note">
+All teacher registration fields are compulsory.
+</div>
+
+<label class="required-label">Teacher Full Name *</label>
+<input id="teacherName" placeholder="Teacher Full Name">
+
+<label class="required-label">Teaching Subject *</label>
+<input id="teacherSubject" placeholder="Teaching Subject">
+
+<label class="required-label">School Name *</label>
+<input id="teacherSchool" placeholder="School Name">
+
+<label style="display:block;margin:15px 0;font-weight:bold">
+<input type="checkbox" id="teacherConfirm">
+I confirm that I am a teacher of Gargi Academy. *
+</label>
+
+<button class="success" onclick="registerTeacher()">
+Create Teacher Account
+</button>
+
+<button class="gray" onclick="showRegister()">
+⬅ Student Registration
+</button>
+
+</div>
+
+
+<!-- LOGIN -->
+
+<div class="card hidden" id="loginBox">
+
+<h2>🔐 Student Login</h2>
+
+<div class="note">
+Students login using <b>Full Name + Roll Number</b>.
+<br>
+No password is required.
+</div>
+
+<label class="required-label">Full Name *</label>
+<input id="loginName" placeholder="Full Name with Surname">
+
+<label class="required-label">Roll Number *</label>
+<input id="loginRoll" placeholder="Roll Number">
+
+<button class="success" onclick="studentLogin()">
+Student Login
+</button>
+
+<hr>
+
+<h2>👨‍🏫 Teacher Login</h2>
+
+<input id="teacherLoginName" placeholder="Teacher Full Name">
+
+<button class="purple" onclick="teacherLogin()">
+Teacher Login
+</button>
+
+<br>
+
+<button class="gray" onclick="showRegister()">
+⬅ Back
+</button>
+
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="card hidden" id="adminLoginBox">
+<h2>👑 Admin Login</h2>
+<div class="note">
+This login is for the Gargi Academy Quiz Arena administrator.
+</div>
+
+<label class="required-label">Admin Name *</label>
+<input id="adminName" placeholder="Admin name">
+
+<label class="required-label">Admin Password *</label>
+<input id="adminPassword" type="password" placeholder="Admin password">
+
+<button class="gold" onclick="adminLogin()">👑 Enter Admin Panel</button>
+<button class="gray" onclick="showLogin()">⬅ Back to Login</button>
+</div>
+
+</section>
+
+
+<!-- =====================================================
+HOUSE
+===================================================== -->
+
+<section id="housePage" class="hidden">
+
+<div class="card">
+
+<h1 class="title">🏠 Choose Your House</h1>
+
+<div class="note">
+⚠️ <b>Choose carefully!</b>
+<br><br>
+Your house cannot be changed after selecting it.
+</div>
+
+<div class="house-grid">
+
+<div class="house blue" onclick="selectHouse('Blue')">
+🔵
+<h2>BLUE HOUSE</h2>
+<p>Represent Blue House</p>
+</div>
+
+<div class="house red" onclick="selectHouse('Red')">
+🔴
+<h2>RED HOUSE</h2>
+<p>Represent Red House</p>
+</div>
+
+<div class="house yellow" onclick="selectHouse('Yellow')">
+🟡
+<h2>YELLOW HOUSE</h2>
+<p>Represent Yellow House</p>
+</div>
+
+<div class="house white" onclick="selectHouse('White')">
+⚪
+<h2>WHITE HOUSE</h2>
+<p>Represent White House</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+DASHBOARD
+===================================================== -->
+
+<section id="dashboard" class="hidden">
+
+<div class="card">
+
+<h1 class="title">🎮 Quiz Arena Dashboard</h1>
+
+<h2 style="text-align:center">
+🙏 Respected Principal Bhuwan Adhikari Sir
+</h2>
+
+<p style="text-align:center;font-size:18px">
+Welcome to Gargi Academy Quiz Arena!
+</p>
+
+<p style="text-align:center">
+Player:
+<b id="dashName"></b>
+<br>
+House:
+<b id="dashHouse"></b>
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="stats">
+
+<div class="stat">
+📚 Books
+<b id="dashBooks">0</b>
+</div>
+
+<div class="stat">
+💎 Blue Diamonds
+<b id="dashDiamonds">0</b>
+</div>
+
+<div class="stat">
+👥 Friends
+<b id="dashFriends">0</b>
+</div>
+
+<div class="stat">
+🏠 House
+<b id="dashHouseStat">-</b>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- QUIZ OPTIONS -->
+
+<div class="card">
+
+<h2>🎯 Quiz Options</h2>
+
+<div class="menu-grid">
+
+<button class="menu-btn" onclick="startQuiz('general')">
+🧠 General Round
+<small>15 Questions</small>
+</button>
+
+<button class="menu-btn" onclick="startQuiz('it')">
+💻 IT Quiz
+<small>15 Questions</small>
+</button>
+
+<button class="menu-btn" onclick="startQuiz('gk')">
+🌎 General Knowledge
+<small>20 Questions</small>
+</button>
+
+<button class="menu-btn" onclick="startQuiz('rapid')">
+⚡ Rapid Fire
+<small>15 Questions</small>
+</button>
+
+<button class="menu-btn" onclick="startQuiz('person')">
+🖼️ Guess Famous Person
+<small>10 Questions</small>
+</button>
+
+<button class="menu-btn" onclick="startMultiplayer()">
+👥 Multiplayer
+<small>Multiplayer Round</small>
+</button>
+
+<button class="menu-btn" onclick="startQuiz('teacher')">
+👨‍🏫 Teacher Quiz
+<small>Once every 7 days</small>
+</button>
+
+<button class="menu-btn" onclick="openSubmissions()">
+💡 Questions & Reviews
+<small>Submit ideas, questions & feedback</small>
+</button>
+
+<button class="menu-btn" onclick="openReviewBox()">
+⭐ Give a Review
+<small>Rate and review the quiz</small>
+</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+    <div class="cooldown-box" id="teacherCooldownDashboard"></div>
+</div>
+
+<!-- OTHER OPTIONS -->
+
+<div class="card">
+
+<h2>📊 Other Options</h2>
+
+<div class="menu-grid">
+
+<button class="menu-btn" onclick="openHousePlayers()">
+🏠 House Players
+<small>See house player count</small>
+</button>
+
+<button class="menu-btn" onclick="openLeaderboard('books')">
+📚 Books Leaderboard
+<small>Top 100</small>
+</button>
+
+<button class="menu-btn" onclick="openLeaderboard('diamonds')">
+💎 Diamond Leaderboard
+<small>Top 100 with diamonds</small>
+</button>
+
+<button class="menu-btn" onclick="openShop()">
+💎 Diamond Shop
+<small>200 Books = 1 Diamond</small>
+</button>
+
+<button class="menu-btn" onclick="openFriends()">
+👥 Friends
+<small>Add students</small>
+</button>
+
+<button class="menu-btn" onclick="openChat()">
+💬 Chat
+<small>Chat with friends</small>
+</button>
+
+</div>
+
+</div>
+
+
+<div class="card admin-card" style="text-align:center">
+
+<b>Admin: Aayup Sunar</b>
+<br>
+<button id="dashboardAdminButton" class="gold hidden" onclick="openAdminPanel()">
+👑 Admin Panel
+</button>
+
+<br><br>
+
+<button class="danger" onclick="deleteMyAccount()">
+🗑️ Delete My Account
+</button>
+
+<br>
+
+<button class="danger" onclick="logout()">
+🚪 Logout
+</button>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+HOUSE PLAYERS
+===================================================== -->
+
+<section id="housePlayersPage" class="hidden">
+
+<div class="card">
+
+<button class="gray" onclick="showDashboard()">
+⬅ Back to Dashboard
+</button>
+
+<h1 class="title">🏠 House Players</h1>
+
+<div class="house-grid">
+
+<div class="house blue">
+🔵
+<h2>Blue House</h2>
+<div class="house-count" id="blueCount">0</div>
+Players
+</div>
+
+<div class="house red">
+🔴
+<h2>Red House</h2>
+<div class="house-count" id="redCount">0</div>
+Players
+</div>
+
+<div class="house yellow">
+🟡
+<h2>Yellow House</h2>
+<div class="house-count" id="yellowCount">0</div>
+Players
+</div>
+
+<div class="house white">
+⚪
+<h2>White House</h2>
+<div class="house-count" id="whiteCount">0</div>
+Players
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+QUIZ
+===================================================== -->
+
+<section id="quizPage" class="hidden">
+
+<div class="card">
+
+<button class="gray" onclick="showDashboard()">
+⬅ Back to Dashboard
+</button>
+
+<h1 id="quizTitle" class="title"></h1>
+
+<div class="stats">
+
+<div class="stat">
+Question
+<b id="questionNumber">1</b>
+</div>
+
+<div class="stat">
+Books Earned
+<b id="quizBooks">0</b>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="question-box">
+
+<h2 id="questionText"></h2>
+
+<div id="personImageBox"></div>
+
+<div id="optionsBox"></div>
+
+<button
+id="nextButton"
+class="success"
+onclick="nextQuestion()"
+disabled>
+Next ➡
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+LEADERBOARD
+===================================================== -->
+
+<section id="leaderboardPage" class="hidden">
+
+<div class="card">
+
+<button class="gray" onclick="showDashboard()">
+⬅ Back to Dashboard
+</button>
+
+<h1 id="leaderboardTitle" class="title"></h1>
+
+<div id="leaderboardList"></div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+SHOP
+===================================================== -->
+
+<section id="shopPage" class="hidden">
+
+<div class="card">
+
+<button class="gray" onclick="showDashboard()">
+⬅ Back to Dashboard
+</button>
+
+<h1 class="title">💎 Blue Diamond Shop</h1>
+
+<div class="note">
+💎 <b>200 Books = 1 Blue Diamond</b>
+</div>
+
+<h2 style="text-align:center">
+📚 Books: <span id="shopBooks">0</span>
+</h2>
+
+<h2 style="text-align:center">
+💎 Diamonds: <span id="shopDiamonds">0</span>
+</h2>
+
+<div style="text-align:center">
+
+<button class="gold" onclick="buyDiamond()">
+💎 Buy 1 Blue Diamond
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+MULTIPLAYER
+===================================================== -->
+
+<section id="multiplayerPage" class="hidden">
+
+<div class="card">
+
+<button class="gray" onclick="showDashboard()">
+⬅ Back to Dashboard
+</button>
+
+<h1 class="title">👥 Multiplayer Round</h1>
+
+<div id="multiContent"></div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+FRIENDS
+===================================================== -->
+
+<section id="friendsPage" class="hidden">
+
+<div class="card">
+
+<button class="gray" onclick="showDashboard()">
+⬅ Back to Dashboard
+</button>
+
+<h1 class="title">👥 Friends</h1>
+
+<input
+id="friendSearch"
+placeholder="Search student name..."
+oninput="searchFriends()"
+>
+
+<div id="friendSearchResults"></div>
+
+<hr>
+
+<h2>My Friends</h2>
+
+<div id="friendsList"></div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+CHAT
+===================================================== -->
+
+<section id="chatPage" class="hidden">
+
+<div class="card">
+
+<button class="gray" onclick="showDashboard()">
+⬅ Back to Dashboard
+</button>
+
+<h1 class="title">💬 Friends Chat</h1>
+
+<div class="chat-layout">
+
+<div class="friend-list">
+
+<h3>Friends</h3>
+
+<div id="chatFriendList"></div>
+
+</div>
+
+<div>
+
+<h3 id="chatWithName">
+Select a friend
+</h3>
+
+<div id="messages" class="messages">
+Select a friend to chat.
+</div>
+
+<div style="display:flex;gap:5px">
+
+<input
+id="chatInput"
+placeholder="Type your message..."
+style="margin:0"
+>
+
+<button onclick="sendMessage()">
+Send
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================================
+STUDENT QUESTIONS / IDEAS / REVIEWS
+===================================================== -->
+<section id="submissionsPage" class="hidden">
+<div class="card">
+<button class="gray" onclick="showDashboard()">⬅ Back to Dashboard</button>
+<h1 class="title">💡 Student Questions & Reviews</h1>
+
+<div class="note">
+Students can submit a question they would like added to a quiz, suggest something new, and write a review.
+</div>
+
+<h2>📝 Question to Add</h2>
+<label class="required-label">Your Question</label>
+<textarea id="suggestQuestion" rows="3" style="width:100%;padding:13px;border:0;border-radius:10px" placeholder="Type your quiz question"></textarea>
+
+<label class="required-label">Option 1</label>
+<input id="suggestOpt1" placeholder="Option 1">
+<label class="required-label">Option 2</label>
+<input id="suggestOpt2" placeholder="Option 2">
+<label class="required-label">Option 3</label>
+<input id="suggestOpt3" placeholder="Option 3">
+<label class="required-label">Option 4</label>
+<input id="suggestOpt4" placeholder="Option 4">
+
+<label class="required-label">Correct Answer</label>
+<select id="suggestCorrect">
+<option value="">-- Select correct option --</option>
+<option value="0">Option 1</option>
+<option value="1">Option 2</option>
+<option value="2">Option 3</option>
+<option value="3">Option 4</option>
+</select>
+
+<hr>
+
+<h2>➕ Things You Want Added</h2>
+<textarea id="suggestThings" rows="4" style="width:100%;padding:13px;border:0;border-radius:10px" placeholder="What would you like to add to Gargi Quiz Arena?"></textarea>
+
+<h2>⭐ Your Review</h2>
+<label class="required-label">Rating</label>
+<select id="suggestRating">
+<option value="">-- Select rating --</option>
+<option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+<option value="4">⭐⭐⭐⭐ Very Good</option>
+<option value="3">⭐⭐⭐ Good</option>
+<option value="2">⭐⭐ Needs Improvement</option>
+<option value="1">⭐ Poor</option>
+</select>
+<textarea id="suggestReview" rows="4" style="width:100%;padding:13px;border:0;border-radius:10px" placeholder="Write your review or feedback"></textarea>
+
+<br>
+<button class="success" onclick="submitSuggestion()">📤 Submit</button>
+</div>
+</section>
+
+<!-- =====================================================
+ADMIN PANEL
+===================================================== -->
+<section id="adminPage" class="hidden">
+<div class="card">
+<div class="admin-toolbar">
+<button class="gray" onclick="showDashboard()">⬅ Dashboard</button>
+<button class="gold" onclick="renderAdminSubmissions()">🔄 Refresh</button>
+<button class="danger" onclick="adminLogout()">🚪 Admin Logout</button>
+</div>
+<h1 class="title">👑 AAYUP SUNAR — MASTER ADMIN PANEL</h1>
+<div id="adminGreeting" class="admin-hi">HI AAYUP! 🎉</div>
+<div class="note">
+<b>🔐 Admin-only control center</b><br>All registered users, game statistics, houses, books, diamonds, questions, suggestions and reviews are shown here. Student accounts cannot open this panel unless the admin login is successfully entered.
+</div>
+
+<div id="adminStats" class="admin-dashboard"></div>
+
+<div class="admin-section">
+<h2>👥 All Registered Users</h2>
+<div id="adminUsers"></div>
+</div>
+
+<div class="admin-section">
+<h2>🏠 House Information</h2>
+<div id="adminHouses"></div>
+</div>
+
+<div class="admin-section">
+<h2>📝 Submitted Questions — Approval Center</h2>
+<p class="note">Only questions marked <b>Approved</b> are added to the General Round. Reviews do not require approval.</p>
+<div id="adminQuestions"></div>
+</div>
+
+<div class="admin-section">
+<h2>⭐ Student Reviews & Feedback</h2>
+<div id="adminReviews"></div>
+</div>
+
+<div class="admin-section">
+<h2>💡 Ideas / Things Students Want Added</h2>
+<div id="adminIdeas"></div>
+</div>
+</div>
+</section>
+
+<script>
+
+/* =====================================================
+DATABASE
+===================================================== */
+
+let users=JSON.parse(
+    localStorage.getItem("gargiUsers") || "[]"
+);
+
+let currentUser=null;
+let quizQuestions=[];
+let currentQuizType="";
+let currentQuestion=0;
+let quizBooksEarned=0;
+let selectedAnswer=null;
+let chatFriend=null;
+let isAdmin=false;
+let submissions=JSON.parse(localStorage.getItem("gargiSubmissions") || "[]");
+let approvedQuestions=JSON.parse(localStorage.getItem("gargiApprovedQuestions") || "[]");
+const ADMIN_NAME="Aayup Sunar";
+const ADMIN_PASSWORD="baalveer123";
+const TEACHER_COOLDOWN_MS=7*24*60*60*1000;
+
+function getApprovedQuestions(){
+    try{
+        const saved=JSON.parse(localStorage.getItem("gargiApprovedQuestions") || "[]");
+        return Array.isArray(saved) ? saved.filter(q =>
+            q && q.approved===true &&
+            q.q && Array.isArray(q.options) &&
+            q.options.length===4 &&
+            Number.isInteger(Number(q.answer))
+        ) : [];
+    }catch(e){
+        return [];
+    }
+}
+
+function saveApprovedQuestions(){
+    localStorage.setItem("gargiApprovedQuestions",JSON.stringify(approvedQuestions));
+}
+
+
+
+/* =====================================================
+SAVE
+===================================================== */
+
+function saveUsers(){
+    localStorage.setItem(
+        "gargiUsers",
+        JSON.stringify(users)
+    );
+}
+
+function saveCurrentUser(){
+
+    let index=users.findIndex(
+        u=>String(u.id)===String(currentUser.id)
+    );
+
+    if(index!==-1){
+        users[index]=currentUser;
+        saveUsers();
+    }
+}
+
+
+/* =====================================================
+MESSAGE
+===================================================== */
+
+function showMessage(text,type="error"){
+
+    let box=document.getElementById("message");
+
+    box.innerText=text;
+
+    box.className=
+        "message "+(type==="ok"?"ok":"error");
+
+    box.style.display="block";
+}
+
+
+/* =====================================================
+AUTH
+===================================================== */
+
+function showRegister(){
+
+    document.getElementById("registerBox")
+    .classList.remove("hidden");
+
+    document.getElementById("teacherRegisterBox")
+    .classList.add("hidden");
+
+    document.getElementById("loginBox")
+    .classList.add("hidden");
+
+    document.getElementById("message")
+    .style.display="none";
+}
+
+function showTeacherRegister(){
+
+    document.getElementById("registerBox")
+    .classList.add("hidden");
+
+    document.getElementById("teacherRegisterBox")
+    .classList.remove("hidden");
+
+    document.getElementById("loginBox")
+    .classList.add("hidden");
+}
+
+function showLogin(){
+
+    document.getElementById("registerBox")
+    .classList.add("hidden");
+
+    document.getElementById("teacherRegisterBox")
+    .classList.add("hidden");
+
+    document.getElementById("loginBox")
+    .classList.remove("hidden");
+
+    document.getElementById("message")
+    .style.display="none";
+}
+
+
+/* =====================================================
+STUDENT REGISTER
+===================================================== */
+
+function registerStudent(){
+
+    let name=
+        document.getElementById("regName").value.trim();
+
+    let cls=
+        document.getElementById("regClass").value;
+
+    let roll=
+        document.getElementById("regRoll").value.trim();
+
+    let school=
+        document.getElementById("regSchool").value.trim();
+
+    let confirmed=
+        document.getElementById("gargiConfirm").checked;
+
+
+    if(
+        name==="" ||
+        cls==="" ||
+        roll==="" ||
+        school==="" ||
+        !confirmed
+    ){
+
+        showMessage(
+            "❌ Please fill ALL options and tick the Gargi Academy confirmation box."
+        );
+
+        return;
+    }
+
+
+    if(cls!=="8" && cls!=="9"){
+
+        showMessage(
+            "❌ Only Class 8 and Class 9 students are allowed."
+        );
+
+        return;
+    }
+
+
+    if(
+        school.toLowerCase()!=="gargi academy"
+    ){
+
+        showMessage(
+            "❌ You are not allowed to enter this game. Only Gargi Academy students are allowed."
+        );
+
+        return;
+    }
+
+
+    let duplicateName=users.some(
+        u=>
+        u.type==="student" &&
+        u.name.toLowerCase()===name.toLowerCase()
+    );
+
+    if(duplicateName){
+
+        showMessage(
+            "❌ This student name already has an account. Please login instead."
+        );
+
+        return;
+    }
+
+
+    let duplicateRoll=users.some(
+        u=>
+        u.type==="student" &&
+        String(u.class)===String(cls) &&
+        String(u.roll)===String(roll)
+    );
+
+    if(duplicateRoll){
+
+        showMessage(
+            "❌ This Class and Roll Number is already registered."
+        );
+
+        return;
+    }
+
+
+    users.push({
+
+        id:Date.now()+Math.random(),
+
+        type:"student",
+
+        name:name,
+
+        class:cls,
+
+        roll:roll,
+
+        school:"Gargi Academy",
+
+        house:null,
+
+        books:0,
+
+        diamonds:0,
+
+        friends:[]
+
+    });
+
+    saveUsers();
+
+    alert(
+        "✅ Account created successfully!\n\nPlease login using your Full Name and Roll Number."
+    );
+
+    showLogin();
+}
+
+
+/* =====================================================
+TEACHER REGISTER
+===================================================== */
+
+function registerTeacher(){
+
+    let name=
+        document.getElementById("teacherName")
+        .value.trim();
+
+    let subject=
+        document.getElementById("teacherSubject")
+        .value.trim();
+
+    let school=
+        document.getElementById("teacherSchool")
+        .value.trim();
+
+    let confirmed=
+        document.getElementById("teacherConfirm")
+        .checked;
+
+
+    if(
+        name==="" ||
+        subject==="" ||
+        school==="" ||
+        !confirmed
+    ){
+
+        showMessage(
+            "❌ Please fill ALL teacher options and tick the confirmation box."
+        );
+
+        return;
+    }
+
+
+    if(
+        school.toLowerCase()!=="gargi academy"
+    ){
+
+        showMessage(
+            "❌ Only Gargi Academy teachers are allowed."
+        );
+
+        return;
+    }
+
+
+    let duplicate=users.some(
+        u=>
+        u.type==="teacher" &&
+        u.name.toLowerCase()===name.toLowerCase()
+    );
+
+    if(duplicate){
+
+        showMessage(
+            "❌ This teacher already has an account. Please login."
+        );
+
+        return;
+    }
+
+
+    users.push({
+
+        id:Date.now()+Math.random(),
+
+        type:"teacher",
+
+        name:name,
+
+        subject:subject,
+
+        school:"Gargi Academy",
+
+        books:0,
+
+        diamonds:0,
+
+        friends:[]
+
+    });
+
+    saveUsers();
+
+    alert(
+        "✅ Teacher account created successfully!"
+    );
+
+    showLogin();
+}
+
+
+/* =====================================================
+LOGIN
+===================================================== */
+
+function studentLogin(){
+
+    let name=
+        document.getElementById("loginName")
+        .value.trim();
+
+    let roll=
+        document.getElementById("loginRoll")
+        .value.trim();
+
+
+    if(name==="" || roll===""){
+
+        showMessage(
+            "❌ Please fill Full Name and Roll Number."
+        );
+
+        return;
+    }
+
+
+    let user=users.find(
+        u=>
+        u.type==="student" &&
+        u.name.toLowerCase()===name.toLowerCase() &&
+        String(u.roll)===String(roll)
+    );
+
+
+    if(!user){
+
+        showMessage(
+            "❌ Student account not found."
+        );
+
+        return;
+    }
+
+
+    currentUser=user;
+
+
+    if(!currentUser.house){
+        showHousePage();
+    }
+    else{
+        showDashboard();
+    }
+}
+
+
+function teacherLogin(){
+
+    let name=
+        document.getElementById("teacherLoginName")
+        .value.trim();
+
+
+    if(name===""){
+
+        showMessage(
+            "❌ Enter the teacher's full name."
+        );
+
+        return;
+    }
+
+
+    let user=users.find(
+        u=>
+        u.type==="teacher" &&
+        u.name.toLowerCase()===name.toLowerCase()
+    );
+
+
+    if(!user){
+
+        showMessage(
+            "❌ Teacher account not found."
+        );
+
+        return;
+    }
+
+
+    currentUser=user;
+
+    showDashboard();
+}
+
+
+/* =====================================================
+PAGE CONTROL
+===================================================== */
+
+function hideAll(){
+
+    [
+        "authPage",
+        "housePage",
+        "dashboard",
+        "housePlayersPage",
+        "quizPage",
+        "leaderboardPage",
+        "shopPage",
+        "multiplayerPage",
+        "friendsPage",
+        "chatPage",
+        "submissionsPage",
+        "adminPage"
+    ].forEach(
+        id=>
+        document.getElementById(id)
+        .classList.add("hidden")
+    );
+}
+
+function showHousePage(){
+
+    hideAll();
+
+    document.getElementById("housePage")
+    .classList.remove("hidden");
+}
+
+function showDashboard(){
+
+    if(!currentUser){
+
+        showAuth();
+
+        return;
+    }
+
+    hideAll();
+
+    document.getElementById("dashboard")
+    .classList.remove("hidden");
+
+    updateDashboard();
+}
+
+function showAuth(){
+
+    hideAll();
+
+    document.getElementById("authPage")
+    .classList.remove("hidden");
+}
+
+
+/* =====================================================
+HOUSE
+===================================================== */
+
+function selectHouse(house){
+
+    if(!currentUser)return;
+
+
+    if(currentUser.house){
+
+        alert(
+            "❌ Your house has already been selected."
+        );
+
+        showDashboard();
+
+        return;
+    }
+
+
+    if(!confirm(
+        "Choose "+house+" House?\n\nYou cannot change it later."
+    ))return;
+
+
+    currentUser.house=house;
+
+    saveCurrentUser();
+
+    alert(
+        "✅ You joined "+house+" House!"
+    );
+
+    showDashboard();
+}
+
+
+/* =====================================================
+DASHBOARD
+===================================================== */
+
+function updateDashboard(){
+
+    document.getElementById("dashName")
+    .innerText=currentUser.name;
+
+    document.getElementById("dashHouse")
+    .innerText=currentUser.house||"Not Selected";
+
+    document.getElementById("dashHouseStat")
+    .innerText=currentUser.house||"Not Selected";
+
+    document.getElementById("dashBooks")
+    .innerText=currentUser.books||0;
+
+    document.getElementById("dashDiamonds")
+    .innerText=currentUser.diamonds||0;
+
+    document.getElementById("dashFriends")
+    .innerText=getFriends().length;
+
+    updateTeacherCooldown();
+
+    const adminBtn=document.getElementById("dashboardAdminButton");
+    if(adminBtn){
+        adminBtn.classList.toggle("hidden", !isAdmin);
+    }
+}
+
+
+/* =====================================================
+HOUSE PLAYERS
+===================================================== */
+
+function openHousePlayers(){
+
+    hideAll();
+
+    document.getElementById("housePlayersPage")
+    .classList.remove("hidden");
+
+
+    document.getElementById("blueCount")
+    .innerText=
+    users.filter(
+        u=>u.type==="student"&&u.house==="Blue"
+    ).length;
+
+
+    document.getElementById("redCount")
+    .innerText=
+    users.filter(
+        u=>u.type==="student"&&u.house==="Red"
+    ).length;
+
+
+    document.getElementById("yellowCount")
+    .innerText=
+    users.filter(
+        u=>u.type==="student"&&u.house==="Yellow"
+    ).length;
+
+
+    document.getElementById("whiteCount")
+    .innerText=
+    users.filter(
+        u=>u.type==="student"&&u.house==="White"
+    ).length;
+}
+
+
+/* =====================================================
+GENERAL QUIZ
+===================================================== */
+
+const generalQuestions=[
+
+{
+q:"What is 12 × 8?",
+options:["86","96","108","88"],
+answer:1
+},
+
+{
+q:"Which organ pumps blood?",
+options:["Lungs","Brain","Heart","Kidney"],
+answer:2
+},
+
+{
+q:"What is the opposite of ancient?",
+options:["Old","Modern","Past","Historic"],
+answer:1
+},
+
+{
+q:"Which device is used to type text?",
+options:["Keyboard","Monitor","Speaker","Printer"],
+answer:0
+},
+
+{
+q:"What is 144 ÷ 12?",
+options:["10","11","12","14"],
+answer:2
+},
+
+{
+q:"Which gas do humans need for respiration?",
+options:["Carbon dioxide","Oxygen","Nitrogen","Hydrogen"],
+answer:1
+},
+
+{
+q:"Which is a programming language?",
+options:["Python","Windows","Google","Chrome"],
+answer:0
+},
+
+{
+q:"What is the plural of child?",
+options:["Childs","Children","Childes","Childrens"],
+answer:1
+},
+
+{
+q:"How many sides does a hexagon have?",
+options:["5","6","7","8"],
+answer:1
+},
+
+{
+q:"Which planet is known as the Red Planet?",
+options:["Earth","Mars","Venus","Jupiter"],
+answer:1
+},
+
+{
+q:"What is 25% of 100?",
+options:["10","20","25","50"],
+answer:2
+},
+
+{
+q:"Which part of a plant absorbs water?",
+options:["Flower","Root","Fruit","Leaf"],
+answer:1
+},
+
+{
+q:"HTML is mainly used to create:",
+options:["Web pages","Music","Antivirus","Operating systems"],
+answer:0
+},
+
+{
+q:"Which word is a noun?",
+options:["Run","Beautiful","School","Quickly"],
+answer:2
+},
+
+{
+q:"What is 7²?",
+options:["14","21","49","56"],
+answer:2
+}
+
+];
+
+
+/* =====================================================
+IT QUIZ
+===================================================== */
+
+const itQuestions=[
+
+{
+q:"What does CPU stand for?",
+options:[
+"Central Processing Unit",
+"Computer Personal Unit",
+"Central Program Utility",
+"Control Processing User"
+],
+answer:0
+},
+
+{
+q:"Which one is an input device?",
+options:[
+"Monitor",
+"Keyboard",
+"Speaker",
+"Projector"
+],
+answer:1
+},
+
+{
+q:"What does RAM stand for?",
+options:[
+"Random Access Memory",
+"Read Access Machine",
+"Rapid Action Memory",
+"Run Access Memory"
+],
+answer:0
+},
+
+{
+q:"Which language is used to structure web pages?",
+options:[
+"HTML",
+"MP3",
+"JPG",
+"ZIP"
+],
+answer:0
+},
+
+{
+q:"Which device stores data permanently?",
+options:[
+"RAM",
+"Hard Drive",
+"CPU",
+"Mouse"
+],
+answer:1
+},
+
+{
+q:"What does URL stand for?",
+options:[
+"Uniform Resource Locator",
+"Universal Read Link",
+"User Resource List",
+"Uniform Record Line"
+],
+answer:0
+},
+
+{
+q:"Which is an operating system?",
+options:[
+"Windows",
+"Google",
+"YouTube",
+"HTML"
+],
+answer:0
+},
+
+{
+q:"Which symbol is used in an email address?",
+options:[
+"#",
+"@",
+"&",
+"%"
+],
+answer:1
+},
+
+{
+q:"What does USB stand for?",
+options:[
+"Universal Serial Bus",
+"United System Board",
+"Universal Storage Box",
+"User Serial Board"
+],
+answer:0
+},
+
+{
+q:"Which is a web browser?",
+options:[
+"Chrome",
+"Excel",
+"Windows",
+"Android"
+],
+answer:0
+},
+
+{
+q:"What is malware?",
+options:[
+"A type of food",
+"Harmful software",
+"A computer screen",
+"A keyboard"
+],
+answer:1
+},
+
+{
+q:"Which is a search engine?",
+options:[
+"Google",
+"Windows",
+"Word",
+"PowerPoint"
+],
+answer:0
+},
+
+{
+q:"What is a password normally used for?",
+options:[
+"Security",
+"Printing",
+"Charging",
+"Cooling"
+],
+answer:0
+},
+
+{
+q:"Which is a programming language?",
+options:[
+"Python",
+"Chrome",
+"Windows",
+"YouTube"
+],
+answer:0
+},
+
+{
+q:"What does Wi-Fi allow?",
+options:[
+"Wireless network connection",
+"Printing without ink",
+"Increasing screen size",
+"Automatic charging"
+],
+answer:0
+}
+
+];
+
+
+/* =====================================================
+GENERAL KNOWLEDGE
+===================================================== */
+
+const gkQuestions=[
+
+{
+q:"What is the capital of Nepal?",
+options:["Pokhara","Kathmandu","Butwal","Biratnagar"],
+answer:1
+},
+
+{
+q:"Which is the highest mountain in the world?",
+options:["K2","Mount Everest","Annapurna","Makalu"],
+answer:1
+},
+
+{
+q:"How many continents are there?",
+options:["5","6","7","8"],
+answer:2
+},
+
+{
+q:"Which is the largest ocean?",
+options:["Atlantic","Indian","Pacific","Arctic"],
+answer:2
+},
+
+{
+q:"What is the national flower of Nepal?",
+options:["Rose","Rhododendron","Lotus","Sunflower"],
+answer:1
+},
+
+{
+q:"Which planet is closest to the Sun?",
+options:["Earth","Mercury","Mars","Venus"],
+answer:1
+},
+
+{
+q:"Which is the largest continent?",
+options:["Asia","Africa","Europe","Australia"],
+answer:0
+},
+
+{
+q:"Which country is famous for the Great Wall?",
+options:["India","China","Japan","Korea"],
+answer:1
+},
+
+{
+q:"Which is the smallest continent?",
+options:["Europe","Australia","Asia","Africa"],
+answer:1
+},
+
+{
+q:"How many days are in a leap year?",
+options:["364","365","366","367"],
+answer:2
+},
+
+{
+q:"Which animal is commonly called the King of the Jungle?",
+options:["Tiger","Lion","Elephant","Bear"],
+answer:1
+},
+
+{
+q:"Which is the fastest land animal?",
+options:["Lion","Cheetah","Horse","Tiger"],
+answer:1
+},
+
+{
+q:"What is the currency of Japan?",
+options:["Yuan","Yen","Won","Dollar"],
+answer:1
+},
+
+{
+q:"Which planet is famous for its rings?",
+options:["Mars","Saturn","Mercury","Venus"],
+answer:1
+},
+
+{
+q:"Which country is called the Land of the Rising Sun?",
+options:["China","Japan","India","Thailand"],
+answer:1
+},
+
+{
+q:"What is H₂O commonly called?",
+options:["Salt","Water","Oxygen","Hydrogen"],
+answer:1
+},
+
+{
+q:"Which is the largest mammal?",
+options:["Elephant","Blue Whale","Giraffe","Rhino"],
+answer:1
+},
+
+{
+q:"How many players are on a football team on the field?",
+options:["9","10","11","12"],
+answer:2
+},
+
+{
+q:"Which language is mainly spoken in Brazil?",
+options:["Spanish","Portuguese","English","French"],
+answer:1
+},
+
+{
+q:"What is the capital of France?",
+options:["London","Paris","Rome","Berlin"],
+answer:1
+}
+
+];
+
+
+/* =====================================================
+RAPID FIRE
+===================================================== */
+
+const rapidQuestions=[
+
+{
+q:"5 + 5 = ?",
+options:["8","9","10","11"],
+answer:2
+},
+
+{
+q:"10 × 10 = ?",
+options:["50","100","110","1000"],
+answer:1
+},
+
+{
+q:"Capital of India?",
+options:["Delhi","Mumbai","Kolkata","Chennai"],
+answer:0
+},
+
+{
+q:"Which planet do we live on?",
+options:["Mars","Earth","Venus","Jupiter"],
+answer:1
+},
+
+{
+q:"How many months are in a year?",
+options:["10","11","12","13"],
+answer:2
+},
+
+{
+q:"Which animal gives us wool?",
+options:["Cow","Sheep","Dog","Horse"],
+answer:1
+},
+
+{
+q:"Red + White makes?",
+options:["Pink","Green","Blue","Black"],
+answer:0
+},
+
+{
+q:"How many hours are in a day?",
+options:["12","18","24","30"],
+answer:2
+},
+
+{
+q:"Which organ helps us see?",
+options:["Ear","Eye","Nose","Skin"],
+answer:1
+},
+
+{
+q:"What comes after 99?",
+options:["98","100","101","90"],
+answer:1
+},
+
+{
+q:"Which is a fruit?",
+options:["Potato","Carrot","Apple","Onion"],
+answer:2
+},
+
+{
+q:"Which is the largest planet?",
+options:["Earth","Mars","Jupiter","Venus"],
+answer:2
+},
+
+{
+q:"50 ÷ 5 = ?",
+options:["5","10","15","20"],
+answer:1
+},
+
+{
+q:"Which one can fly?",
+options:["Eagle","Cow","Fish","Horse"],
+answer:0
+},
+
+{
+q:"Which star is closest to Earth?",
+options:["Sirius","Sun","Polaris","Vega"],
+answer:1
+}
+
+];
+
+
+/* =====================================================
+FAMOUS PERSON QUIZ
+===================================================== */
+
+const personQuestions=[
+
+{
+q:"Who is this famous footballer?",
+image:"https://upload.wikimedia.org/wikipedia/commons/8/89/Cristiano_Ronaldo_2018.jpg",
+options:[
+"Cristiano Ronaldo",
+"Lionel Messi",
+"Neymar",
+"Kylian Mbappe"
+],
+answer:0
+},
+
+{
+q:"Who is this famous scientist?",
+image:"https://upload.wikimedia.org/wikipedia/commons/d/d3/Albert_Einstein_Head.jpg",
+options:[
+"Albert Einstein",
+"Isaac Newton",
+"Thomas Edison",
+"Galileo Galilei"
+],
+answer:0
+},
+
+{
+q:"Who is this famous person?",
+image:"https://upload.wikimedia.org/wikipedia/commons/d/d1/Portrait_Gandhi.jpg",
+options:[
+"Nelson Mandela",
+"Mahatma Gandhi",
+"Abraham Lincoln",
+"Jawaharlal Nehru"
+],
+answer:1
+},
+
+{
+q:"Who is this famous footballer?",
+image:"https://upload.wikimedia.org/wikipedia/commons/c/c8/Lionel_Messi_WC2022.jpg",
+options:[
+"Cristiano Ronaldo",
+"Lionel Messi",
+"Neymar",
+"Ronaldinho"
+],
+answer:1
+},
+
+{
+q:"Who is this famous inventor?",
+image:"https://upload.wikimedia.org/wikipedia/commons/9/9d/Thomas_Edison2.jpg",
+options:[
+"Thomas Edison",
+"Albert Einstein",
+"Isaac Newton",
+"Nikola Tesla"
+],
+answer:0
+},
+
+{
+q:"Who is this famous scientist?",
+image:"https://upload.wikimedia.org/wikipedia/commons/0/09/Sir_Isaac_Newton_by_Sir_Godfrey_Kneller%2C_Bt.jpg",
+options:[
+"Galileo Galilei",
+"Isaac Newton",
+"Stephen Hawking",
+"Charles Darwin"
+],
+answer:1
+},
+
+{
+q:"Who is this famous technology entrepreneur?",
+image:"https://upload.wikimedia.org/wikipedia/commons/0/09/Steve_JobsHeadshot.jpg",
+options:[
+"Bill Gates",
+"Steve Jobs",
+"Mark Zuckerberg",
+"Elon Musk"
+],
+answer:1
+},
+
+{
+q:"Who is this famous Indian actor?",
+image:"https://upload.wikimedia.org/wikipedia/commons/5/53/Amitabh_Bachchan.jpg",
+options:[
+"Amitabh Bachchan",
+"Shah Rukh Khan",
+"Salman Khan",
+"Aamir Khan"
+],
+answer:0
+},
+
+{
+q:"Who is this famous Indian actor?",
+image:"https://upload.wikimedia.org/wikipedia/commons/5/5f/Shah_Rukh_Khan_grace_the_launch_of_the_new_Swiggy_app.jpg",
+options:[
+"Akshay Kumar",
+"Shah Rukh Khan",
+"Amitabh Bachchan",
+"Ranbir Kapoor"
+],
+answer:1
+},
+
+{
+q:"Who is this famous scientist and inventor?",
+image:"https://upload.wikimedia.org/wikipedia/commons/d/d4/N.Tesla.JPG",
+options:[
+"Nikola Tesla",
+"Thomas Edison",
+"Isaac Newton",
+"Albert Einstein"
+],
+answer:0
+}
+
+];
+
+
+/* =====================================================
+TEACHER QUIZ
+
+MULTIPLE TEACHER OPTIONS
+===================================================== */
+
+/*
+Teacher names supplied for the quiz:
+
+Santosh Sharma
+Sandeep Belbase
+Bishnu Subedi
+Samir Adhikari
+Bhuwan Adhikari
+Bine Patel
+Kamal Aryal
+Bhim Bahadur Choudhary
+Arjun Pandey
+*/
+
+const teacherQuestions=[
+
+{
+q:"Who is the class teacher of Class 9 Lotus?",
+options:[
+"Sandeep Belbase",
+"Samir Adhikari",
+"Bishnu Subedi",
+"Kamal Aryal"
+],
+answer:0
+},
+
+{
+q:"Who is the class teacher of Class 9 Rose?",
+options:[
+"Bhuwan Adhikari",
+"Arjun Pandey",
+"Santosh Sharma",
+"Bhim Bahadur Choudhary"
+],
+answer:1
+},
+
+{
+q:"Who is the class teacher of Class 9 Lily?",
+options:[
+"Binay Patel",
+"Sandeep Belbase",
+"Samir Adhikari",
+"Arjun Pandey"
+],
+answer:0
+},
+
+{
+q:"Who is the Principal of Gargi Academy School?",
+options:[
+"Bhuwan Adhikari",
+"Santosh Sharma",
+"Sandeep Belbase",
+"Samir Adhikari"
+],
+answer:0
+},
+
+{
+q:"Who teaches Computer?",
+options:[
+"Sandeep Belbase",
+"Bishnu Subedi",
+"Kamal Aryal",
+"Bhim Bahadur Choudhary"
+],
+answer:0
+},
+
+{
+q:"Who teaches Science?",
+options:[
+"Kamal Aryal",
+"Bishnu Subedi",
+"Samir Adhikari",
+"Santosh Sharma"
+],
+answer:1
+},
+
+{
+q:"Who is also associated with teaching Science?",
+options:[
+"Bine Patel",
+"Bhuwan Adhikari",
+"Samir Adhikari",
+"Bhim Bahadur Choudhary"
+],
+answer:0
+},
+
+{
+q:"Who teaches Nepali?",
+options:[
+"Sandeep Belbase",
+"Kamal Aryal",
+"Bishnu Subedi",
+"Arjun Pandey"
+],
+answer:1
+},
+
+{
+q:"Who teaches C Math?",
+options:[
+"Samir Adhikari",
+"Santosh Sharma",
+"Bine Patel",
+"Bhuwan Adhikari"
+],
+answer:0
+},
+
+{
+q:"Who teaches O Math?",
+options:[
+"Bishnu Subedi",
+"Bhim Bahadur Choudhary",
+"Sandeep Belbase",
+"Kamal Aryal"
+],
+answer:1
+},
+
+{
+q:"Which teacher is the Principal?",
+options:[
+"Santosh Sharma",
+"Bhuwan Adhikari",
+"Arjun Pandey",
+"Bine Patel"
+],
+answer:1
+},
+
+{
+q:"Which teacher is associated with Class 9 Rose?",
+options:[
+"Arjun Pandey",
+"Sandeep Belbase",
+"Samir Adhikari",
+"Bishnu Subedi"
+],
+answer:0
+},
+
+{
+q:"Which teacher is associated with Class 9 Lily?",
+options:[
+"Kamal Aryal",
+"Binay Patel",
+"Bhim Bahadur Choudhary",
+"Bhuwan Adhikari"
+],
+answer:1
+},
+
+{
+q:"Which teacher is associated with Class 9 Lotus?",
+options:[
+"Samir Adhikari",
+"Sandeep Belbase",
+"Arjun Pandey",
+"Bine Patel"
+],
+answer:1
+},
+
+{
+q:"Who is Santosh Sharma?",
+options:[
+"A teacher of Gargi Academy",
+"A student of Class 8",
+"A principal of another school",
+"A sports captain"
+],
+answer:0
+}
+
+];
+
+
+/* =====================================================
+START QUIZ
+===================================================== */
+
+function getTeacherCooldownText(){
+    if(!currentUser || currentUser.type!=="student") return "";
+    const last=Number(currentUser.lastTeacherQuiz||0);
+    if(!last) return "👨‍🏫 Teacher Quiz is ready! You can play it now.";
+    const next=last+TEACHER_COOLDOWN_MS;
+    const remaining=next-Date.now();
+    if(remaining<=0) return "👨‍🏫 Teacher Quiz is ready! You can play it now.";
+    return "⏳ Teacher Quiz is on cooldown. You can play again in <b>"+formatDuration(remaining)+"</b>.";
+}
+
+function formatDuration(ms){
+    let total=Math.ceil(ms/1000);
+    let days=Math.floor(total/86400);
+    total%=86400;
+    let hours=Math.floor(total/3600);
+    total%=3600;
+    let mins=Math.floor(total/60);
+    return days+"d "+hours+"h "+mins+"m";
+}
+
+function updateTeacherCooldown(){
+    const box=document.getElementById("teacherCooldownDashboard");
+    if(!box)return;
+    if(!currentUser || currentUser.type!=="student"){
+        box.innerHTML="👨‍🏫 Teacher Quiz is available to Class 8 & 9 students.";
+        return;
+    }
+    box.innerHTML=getTeacherCooldownText();
+}
+
+function startQuiz(type){
+
+    if(type==="teacher"){
+
+        if(
+            currentUser.type!=="student" ||
+            (
+                String(currentUser.class)!=="8" &&
+                String(currentUser.class)!=="9"
+            )
+        ){
+            alert("❌ Teacher Quiz is only available for Class 8 and Class 9 students.");
+            return;
+        }
+
+        const last=Number(currentUser.lastTeacherQuiz||0);
+        if(last && Date.now()-last<TEACHER_COOLDOWN_MS){
+            alert(
+                "⏳ Teacher Quiz can be played only once every 7 days.\n\n"+
+                "Please wait "+formatDuration(last+TEACHER_COOLDOWN_MS-Date.now())+"."
+            );
+            updateTeacherCooldown();
+            return;
+        }
+    }
+
+    currentQuizType=type;
+
+    if(type==="general") quizQuestions=[...generalQuestions];
+    if(type==="it") quizQuestions=[...itQuestions];
+    if(type==="gk") quizQuestions=[...gkQuestions];
+    if(type==="rapid") quizQuestions=[...rapidQuestions];
+    if(type==="person") quizQuestions=[...personQuestions];
+    if(type==="teacher") quizQuestions=[...teacherQuestions];
+
+    currentQuestion=0;
+    quizBooksEarned=0;
+    selectedAnswer=null;
+
+    hideAll();
+    document.getElementById("quizPage").classList.remove("hidden");
+
+    const titles={
+        general:"🧠 General Round",
+        it:"💻 IT Quiz",
+        gk:"🌎 General Knowledge",
+        rapid:"⚡ Rapid Fire",
+        person:"🖼️ Guess the Famous Person",
+        teacher:"👨‍🏫 Teacher Quiz"
+    };
+
+    document.getElementById("quizTitle").innerText=titles[type];
+    showQuestion();
+}
+
+
+/* =====================================================
+SHOW QUESTION
+===================================================== */
+
+function showQuestion(){
+
+    let q=quizQuestions[currentQuestion];
+
+    selectedAnswer=null;
+
+
+    document.getElementById("questionNumber")
+    .innerText=
+    (currentQuestion+1)+" / "+quizQuestions.length;
+
+
+    document.getElementById("quizBooks")
+    .innerText=quizBooksEarned;
+
+
+    document.getElementById("questionText")
+    .innerText=q.q;
+
+
+    let imageBox=
+        document.getElementById("personImageBox");
+
+
+    if(q.image){
+
+        imageBox.innerHTML=`
+
+        <img
+        class="person-image"
+        src="${q.image}"
+        alt="Famous person"
+        onerror="this.style.display='none'"
+        >
+
+        `;
+
+    }
+    else{
+
+        imageBox.innerHTML="";
+
+    }
+
+
+    let box=
+        document.getElementById("optionsBox");
+
+    box.innerHTML="";
+
+
+    q.options.forEach(
+        (option,index)=>{
+
+            let btn=document.createElement("button");
+
+            btn.className="option";
+
+            btn.innerText=option;
+
+            btn.onclick=()=>{
+                selectAnswer(index,btn);
+            };
+
+            box.appendChild(btn);
+
+        }
+    );
+
+
+    document.getElementById("nextButton")
+    .disabled=true;
+
+
+    document.getElementById("nextButton")
+    .innerText=
+    currentQuestion===quizQuestions.length-1
+    ?"Finish 🏁"
+    :"Next ➡";
+}
+
+
+/* =====================================================
+SELECT ANSWER
+===================================================== */
+
+function selectAnswer(index,button){
+
+    if(selectedAnswer!==null)return;
+
+
+    selectedAnswer=index;
+
+
+    let q=quizQuestions[currentQuestion];
+
+
+    let buttons=
+        document.querySelectorAll(".option");
+
+
+    buttons.forEach(
+        (b,i)=>{
+
+            b.disabled=true;
+
+            if(i===q.answer){
+                b.classList.add("correct");
+            }
+
+        }
+    );
+
+
+    if(index===q.answer){
+
+        button.classList.add("correct");
+
+        quizBooksEarned+=10;
+
+    }
+    else{
+
+        button.classList.add("wrong");
+
+    }
+
+
+    document.getElementById("quizBooks")
+    .innerText=quizBooksEarned;
+
+
+    document.getElementById("nextButton")
+    .disabled=false;
+}
+
+
+/* =====================================================
+NEXT
+===================================================== */
+
+function nextQuestion(){
+
+    if(selectedAnswer===null)return;
+
+
+    if(
+        currentQuestion<
+        quizQuestions.length-1
+    ){
+
+        currentQuestion++;
+
+        showQuestion();
+
+    }
+    else{
+
+        finishQuiz();
+
+    }
+}
+
+
+/* =====================================================
+FINISH QUIZ
+===================================================== */
+
+function finishQuiz(){
+
+    currentUser.books=
+        (currentUser.books||0)+quizBooksEarned;
+
+    if(currentQuizType==="teacher"){
+        currentUser.lastTeacherQuiz=Date.now();
+    }
+
+    saveCurrentUser();
+
+    if(currentQuizType==="teacher"){
+        alert(
+            "🏁 Teacher Quiz Completed!\n\n"+
+            "📚 You earned "+quizBooksEarned+" Books.\n\n"+
+            "⏳ You can play Teacher Quiz again after 7 days."
+        );
+    }
+    else{
+        alert(
+            "🏁 Quiz Completed!\n\n"+
+            "📚 You earned "+quizBooksEarned+" Books."
+        );
+    }
+
+    showDashboard();
+}
+
+
+/* =====================================================
+SHOP
+===================================================== */
+
+function openShop(){
+
+    hideAll();
+
+    document.getElementById("shopPage")
+    .classList.remove("hidden");
+
+
+    document.getElementById("shopBooks")
+    .innerText=currentUser.books||0;
+
+
+    document.getElementById("shopDiamonds")
+    .innerText=currentUser.diamonds||0;
+}
+
+
+function buyDiamond(){
+
+    if(
+        (currentUser.books||0)<200
+    ){
+
+        alert(
+            "❌ You need 200 Books to buy 1 Blue Diamond."
+        );
+
+        return;
+    }
+
+
+    currentUser.books-=200;
+
+    currentUser.diamonds=
+        (currentUser.diamonds||0)+1;
+
+
+    saveCurrentUser();
+
+    openShop();
+
+
+    alert(
+        "💎 1 Blue Diamond purchased!"
+    );
+}
+
+
+/* =====================================================
+LEADERBOARD
+===================================================== */
+
+function openLeaderboard(type){
+
+    hideAll();
+
+    document.getElementById("leaderboardPage")
+    .classList.remove("hidden");
+
+
+    let list=[...users];
+
+
+    if(type==="books"){
+
+        list.sort(
+            (a,b)=>
+            (b.books||0)-(a.books||0)
+        );
+
+
+        list=list.slice(0,100);
+
+
+        document.getElementById(
+            "leaderboardTitle"
+        ).innerText=
+        "📚 Top 100 Books Leaderboard";
+
+    }
+    else{
+
+        list=list.filter(
+            u=>(u.diamonds||0)>0
+        );
+
+
+        list.sort(
+            (a,b)=>
+            (b.diamonds||0)-(a.diamonds||0)
+        );
+
+
+        list=list.slice(0,100);
+
+
+        document.getElementById(
+            "leaderboardTitle"
+        ).innerText=
+        "💎 Top 100 Blue Diamond Leaderboard";
+    }
+
+
+    let box=
+        document.getElementById(
+            "leaderboardList"
+        );
+
+
+    box.innerHTML="";
+
+
+    if(list.length===0){
+
+        box.innerHTML=
+        "<p style='text-align:center'>No players yet.</p>";
+
+        return;
+    }
+
+
+    list.forEach(
+        (user,index)=>{
+
+            let value=
+                type==="books"
+                ?(user.books||0)+" 📚"
+                :(user.diamonds||0)+" 💎";
+
+
+            let row=
+                document.createElement("div");
+
+
+            row.className="leader-row";
+
+
+            if(index===0)
+                row.classList.add("top");
+
+
+            row.innerHTML=`
+
+            <div>
+            <b>#${index+1}</b>
+            </div>
+
+            <div>
+
+            <b>${escapeHTML(user.name)}</b>
+
+            <br>
+
+            <small>
+
+            ${
+                user.type==="student"
+                ?"Class "+escapeHTML(user.class)
+                :"Teacher"
+            }
+
+            |
+
+            ${escapeHTML(user.house||"No House")}
+
+            </small>
+
+            </div>
+
+            <div>
+            <b>${value}</b>
+            </div>
+
+            `;
+
+
+            box.appendChild(row);
+
+        }
+    );
+}
+
+
+/* =====================================================
+FRIENDS
+===================================================== */
+
+function getFriends(){
+
+    return users.filter(
+        u=>
+        currentUser.friends &&
+        currentUser.friends.includes(u.id)
+    );
+}
+
+
+function openFriends(){
+
+    hideAll();
+
+    document.getElementById("friendsPage")
+    .classList.remove("hidden");
+
+
+    renderFriends();
+
+
+    document.getElementById("friendSearch")
+    .value="";
+
+
+    document.getElementById(
+        "friendSearchResults"
+    ).innerHTML="";
+}
+
+
+function searchFriends(){
+
+    let text=
+        document.getElementById("friendSearch")
+        .value.trim()
+        .toLowerCase();
+
+
+    let box=
+        document.getElementById(
+            "friendSearchResults"
+        );
+
+
+    box.innerHTML="";
+
+
+    if(!text)return;
+
+
+    let results=
+        users.filter(
+            u=>
+            u.type==="student" &&
+            u.id!==currentUser.id &&
+            u.name.toLowerCase()
+            .includes(text)
+        );
+
+
+    if(results.length===0){
+
+        box.innerHTML=
+        "<p>No student found.</p>";
+
+        return;
+    }
+
+
+    results.forEach(
+        user=>{
+
+            let already=
+                currentUser.friends
+                .includes(user.id);
+
+
+            let div=
+                document.createElement("div");
+
+
+            div.className="friend-item";
+
+
+            div.innerHTML=`
+
+            <b>${escapeHTML(user.name)}</b>
+
+            <br>
+
+            Class ${escapeHTML(user.class)}
+
+            <br>
+
+            ${
+                already
+                ?
+                "✅ Already Friends"
+                :
+                `
+                <button
+                onclick="addFriend('${user.id}')">
+                ➕ Add Friend
+                </button>
+                `
+            }
+
+            `;
+
+
+            box.appendChild(div);
+
+        }
+    );
+}
+
+
+function addFriend(id){
+
+    let friend=
+        users.find(
+            u=>String(u.id)===String(id)
+        );
+
+
+    if(!friend)return;
+
+
+    if(
+        currentUser.friends
+        .includes(friend.id)
+    ){
+
+        alert("Already friends.");
+
+        return;
+    }
+
+
+    currentUser.friends.push(
+        friend.id
+    );
+
+
+    if(!Array.isArray(friend.friends))
+        friend.friends=[];
+
+
+    if(
+        !friend.friends
+        .includes(currentUser.id)
+    ){
+
+        friend.friends.push(
+            currentUser.id
+        );
+
+    }
+
+
+    saveCurrentUser();
+
+    saveUsers();
+
+
+    renderFriends();
+
+    searchFriends();
+
+
+    alert(
+        "✅ "+friend.name+
+        " is now your friend."
+    );
+}
+
+
+function renderFriends(){
+
+    let box=
+        document.getElementById(
+            "friendsList"
+        );
+
+
+    box.innerHTML="";
+
+
+    let friends=getFriends();
+
+
+    if(friends.length===0){
+
+        box.innerHTML=
+        "<p>You have no friends yet.</p>";
+
+        return;
+    }
+
+
+    friends.forEach(
+        friend=>{
+
+            let div=
+                document.createElement("div");
+
+
+            div.className="friend-item";
+
+
+            div.innerHTML=`
+
+            <b>👤 ${escapeHTML(friend.name)}</b>
+
+            <br>
+
+            Class ${escapeHTML(
+                friend.class||"-"
+            )}
+
+            <br>
+
+            House:
+            ${escapeHTML(
+                friend.house||"Not Selected"
+            )}
+
+            <br>
+
+            <button
+            onclick="openChatWith('${friend.id}')">
+            💬 Chat
+            </button>
+
+            <button
+            class="danger"
+            onclick="removeFriend('${friend.id}')">
+            Remove
+            </button>
+
+            `;
+
+
+            box.appendChild(div);
+
+        }
+    );
+}
+
+
+function removeFriend(id){
+
+    let friend=
+        users.find(
+            u=>String(u.id)===String(id)
+        );
+
+
+    currentUser.friends=
+        currentUser.friends.filter(
+            x=>String(x)!==String(id)
+        );
+
+
+    if(friend){
+
+        friend.friends=
+            (friend.friends||[])
+            .filter(
+                x=>
+                String(x)!==
+                String(currentUser.id)
+            );
+
+    }
+
+
+    saveCurrentUser();
+
+    saveUsers();
+
+    renderFriends();
+}
+
+
+/* =====================================================
+CHAT
+===================================================== */
+
+function openChat(){
+
+    hideAll();
+
+    document.getElementById("chatPage")
+    .classList.remove("hidden");
+
+
+    chatFriend=null;
+
+
+    document.getElementById("chatWithName")
+    .innerText="Select a friend";
+
+
+    document.getElementById("messages")
+    .innerText=
+    "Select a friend to chat.";
+
+
+    renderChatFriendList();
+}
+
+
+function renderChatFriendList(){
+
+    let box=
+        document.getElementById(
+            "chatFriendList"
+        );
+
+
+    box.innerHTML="";
+
+
+    let friends=getFriends();
+
+
+    if(friends.length===0){
+
+        box.innerHTML=
+        "<p>No friends.</p>";
+
+        return;
+    }
+
+
+    friends.forEach(
+        friend=>{
+
+            let div=
+                document.createElement("div");
+
+
+            div.className="friend-item";
+
+            div.innerText=friend.name;
+
+
+            div.onclick=()=>{
+                openChatWith(friend.id);
+            };
+
+
+            box.appendChild(div);
+
+        }
+    );
+}
+
+
+function openChatWith(id){
+
+    chatFriend=
+        users.find(
+            u=>String(u.id)===String(id)
+        );
+
+
+    if(!chatFriend)return;
+
+
+    hideAll();
+
+
+    document.getElementById("chatPage")
+    .classList.remove("hidden");
+
+
+    renderChatFriendList();
+
+
+    document.getElementById("chatWithName")
+    .innerText=
+    "💬 Chat with "+chatFriend.name;
+
+
+    renderMessages();
+}
+
+
+function chatKey(){
+
+    let ids=[
+        String(currentUser.id),
+        String(chatFriend.id)
+    ].sort();
+
+
+    return "gargi_chat_"+ids.join("_");
+}
+
+
+function getMessages(){
+
+    return JSON.parse(
+        localStorage.getItem(chatKey())||"[]"
+    );
+}
+
+
+function sendMessage(){
+
+    if(!chatFriend){
+
+        alert(
+            "Select a friend first."
+        );
+
+        return;
+    }
+
+
+    let input=
+        document.getElementById("chatInput");
+
+
+    let text=input.value.trim();
+
+
+    if(!text)return;
+
+
+    let messages=getMessages();
+
+
+    messages.push({
+
+        sender:currentUser.id,
+
+        text:text,
+
+        time:new Date().toLocaleString()
+
+    });
+
+
+    localStorage.setItem(
+        chatKey(),
+        JSON.stringify(messages)
+    );
+
+
+    input.value="";
+
+
+    renderMessages();
+}
+
+
+function renderMessages(){
+
+    if(!chatFriend)return;
+
+
+    let box=
+        document.getElementById(
+            "messages"
+        );
+
+
+    let messages=getMessages();
+
+
+    box.innerHTML="";
+
+
+    if(messages.length===0){
+
+        box.innerHTML=
+        "<p style='text-align:center'>No messages yet.</p>";
+
+        return;
+    }
+
+
+    messages.forEach(
+        message=>{
+
+            let div=
+                document.createElement("div");
+
+
+            div.className=
+                "msg "+
+                (
+                    String(message.sender)===
+                    String(currentUser.id)
+                    ?"mine"
+                    :"theirs"
+                );
+
+
+            div.innerHTML=
+                escapeHTML(message.text)+
+                "<br><small>"+
+                escapeHTML(message.time)+
+                "</small>";
+
+
+            box.appendChild(div);
+
+        }
+    );
+
+
+    box.scrollTop=box.scrollHeight;
+}
+
+
+/* =====================================================
+STUDENT SUBMISSIONS
+===================================================== */
+
+function saveSubmissions(){
+    localStorage.setItem("gargiSubmissions",JSON.stringify(submissions));
+}
+
+function saveApprovedQuestions(){
+    localStorage.setItem("gargiApprovedQuestions",JSON.stringify(approvedQuestions));
+}
+
+function openSubmissions(){
+    hideAll();
+    document.getElementById("submissionsPage").classList.remove("hidden");
+}
+
+function openReviewBox(){
+    openSubmissions();
+    setTimeout(()=>{
+        const el=document.getElementById("suggestRating");
+        if(el) el.focus();
+    },50);
+}
+
+function submitSuggestion(){
+    if(!currentUser){
+        alert("Please login first.");
+        return;
+    }
+
+    const q=document.getElementById("suggestQuestion").value.trim();
+    const o1=document.getElementById("suggestOpt1").value.trim();
+    const o2=document.getElementById("suggestOpt2").value.trim();
+    const o3=document.getElementById("suggestOpt3").value.trim();
+    const o4=document.getElementById("suggestOpt4").value.trim();
+    const correct=document.getElementById("suggestCorrect").value;
+    const things=document.getElementById("suggestThings").value.trim();
+    const review=document.getElementById("suggestReview").value.trim();
+    const rating=document.getElementById("suggestRating").value;
+
+    const anyQuestion=q||o1||o2||o3||o4||correct!=="";
+    if(anyQuestion && (!q||!o1||!o2||!o3||!o4||correct==="")){
+        alert("❌ If you submit a quiz question, fill the question, all 4 options and correct answer.");
+        return;
+    }
+
+    if(!anyQuestion && !things && !review){
+        alert("❌ Please enter a question, suggestion, or review.");
+        return;
+    }
+
+    if(review && !rating){
+        alert("❌ Please select a rating for your review.");
+        return;
+    }
+
+    submissions.push({
+        id:Date.now()+Math.random(),
+        studentId:currentUser.id,
+        studentName:currentUser.name,
+        class:currentUser.class||"-",
+        roll:currentUser.roll||"-",
+        question:q,
+        options:[o1,o2,o3,o4],
+        correct:correct,
+        things:things,
+        review:review,
+        rating:rating,
+        questionStatus:anyQuestion?"pending":"none",
+        time:new Date().toLocaleString()
+    });
+
+    saveSubmissions();
+
+    ["suggestQuestion","suggestOpt1","suggestOpt2","suggestOpt3","suggestOpt4","suggestThings","suggestReview"]
+    .forEach(id=>document.getElementById(id).value="");
+    document.getElementById("suggestCorrect").value="";
+    document.getElementById("suggestRating").value="";
+
+    alert("✅ Thank you! Your question/idea/review has been sent to the admin.");
+}
+
+function showAdminLogin(){
+    document.getElementById("registerBox").classList.add("hidden");
+    document.getElementById("teacherRegisterBox").classList.add("hidden");
+    document.getElementById("loginBox").classList.add("hidden");
+    document.getElementById("adminLoginBox").classList.remove("hidden");
+    document.getElementById("message").style.display="none";
+}
+
+function adminLogin(){
+    const name=document.getElementById("adminName").value.trim();
+    const password=document.getElementById("adminPassword").value;
+
+    if(name.toLowerCase()!==ADMIN_NAME.toLowerCase() || password!==ADMIN_PASSWORD){
+        showMessage("❌ Admin name or password is incorrect.");
+        return;
+    }
+
+    isAdmin=true;
+    hideAll();
+    document.getElementById("adminPage").classList.remove("hidden");
+    document.getElementById("adminGreeting").innerHTML="HI AAYUP! 🎉";
+    renderAdminSubmissions();
+}
+
+function openAdminPanel(){
+    if(!isAdmin){
+        showAdminLogin();
+        return;
+    }
+    hideAll();
+    document.getElementById("adminPage").classList.remove("hidden");
+    renderAdminSubmissions();
+}
+
+function adminLogout(){
+    isAdmin=false;
+    showAuth();
+    showLogin();
+}
+
+function rejectSubmission(index){
+    const item=submissions[index];
+    if(!item) return;
+    item.status="rejected";
+    item.rejectedBy="Aayup Sunar";
+    item.rejectedAt=new Date().toISOString();
+    submissions[index]=item;
+    saveSubmissions();
+    renderAdminSubmissions();
+    alert("❌ Question rejected. It will not be added to any quiz.");
+}
+
+function renderAdminSubmissions(){
+    if(!isAdmin)return;
+    const stats=document.getElementById("adminStats");
+    const students=users.filter(u=>u.type==="student");
+    const teachers=users.filter(u=>u.type==="teacher");
+    const reviews=submissions.filter(s=>s.review);
+    const questions=submissions.filter(s=>s.question);
+    const pending=questions.filter(s=>(s.questionStatus||"pending")==="pending");
+    const approved=questions.filter(s=>(s.questionStatus||"")==="approved");
+    const rejected=questions.filter(s=>(s.questionStatus||"")==="rejected");
+    const totalBooks=users.reduce((a,u)=>a+(Number(u.books)||0),0);
+    const totalDiamonds=users.reduce((a,u)=>a+(Number(u.diamonds)||0),0);
+
+    stats.innerHTML=`
+      <div class="admin-stat"><div>👥 Total Users</div><div class="num">${users.length}</div></div>
+      <div class="admin-stat"><div>🎓 Students</div><div class="num">${students.length}</div></div>
+      <div class="admin-stat"><div>👨‍🏫 Teachers</div><div class="num">${teachers.length}</div></div>
+      <div class="admin-stat"><div>📚 Total Books</div><div class="num">${totalBooks}</div></div>
+      <div class="admin-stat"><div>💎 Total Diamonds</div><div class="num">${totalDiamonds}</div></div>
+      <div class="admin-stat"><div>📝 Questions</div><div class="num">${questions.length}</div></div>
+      <div class="admin-stat"><div>⏳ Pending</div><div class="num">${pending.length}</div></div>
+      <div class="admin-stat"><div>⭐ Reviews</div><div class="num">${reviews.length}</div></div>`;
+
+    const usersBox=document.getElementById("adminUsers");
+    if(!users.length){ usersBox.innerHTML='<div class="note">No registered users yet.</div>'; }
+    else{
+      let rows=users.map(u=>`<tr>
+        <td>${escapeHTML(u.name)}</td><td>${escapeHTML(u.type)}</td><td>${escapeHTML(u.class||"-")}</td><td>${escapeHTML(u.roll||"-")}</td>
+        <td>${escapeHTML(u.subject||"-")}</td><td>${escapeHTML(u.house||"-")}</td><td>${Number(u.books)||0}</td><td>${Number(u.diamonds)||0}</td>
+      </tr>`).join("");
+      usersBox.innerHTML=`<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Name</th><th>Type</th><th>Class</th><th>Roll</th><th>Subject</th><th>House</th><th>Books</th><th>Diamonds</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    }
+
+    const houseBox=document.getElementById("adminHouses");
+    const houses=["Blue","Red","Yellow","White"];
+    houseBox.innerHTML=houses.map(h=>{
+      const list=students.filter(u=>u.house===h);
+      const people=list.length ? list.map(u=>`<span class="status-approved" style="margin:3px">${escapeHTML(u.name)} · Class ${escapeHTML(u.class)} · Roll ${escapeHTML(u.roll)}</span>`).join(" ") : `<span class="status-pending">No players</span>`;
+      return `<div class="question-admin-card"><h3>${escapeHTML(h)} House — ${list.length} player(s)</h3>${people}</div>`;
+    }).join("");
+
+    const qBox=document.getElementById("adminQuestions");
+    if(!questions.length){ qBox.innerHTML='<div class="note">📭 No quiz questions have been submitted.</div>'; }
+    else{
+      qBox.innerHTML=questions.slice().reverse().map(s=>{
+        const opts=(s.options||[]).filter(Boolean);
+        const status=s.questionStatus||"pending";
+        const statusClass=status==="approved"?"status-approved":status==="rejected"?"status-rejected":"status-pending";
+        const correct=(s.correct!=="" && opts[Number(s.correct)])?opts[Number(s.correct)]:"-";
+        return `<div class="question-admin-card">
+          <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><h3>📝 ${escapeHTML(s.question)}</h3><span class="${statusClass}">${status.toUpperCase()}</span></div>
+          <p><b>Student:</b> ${escapeHTML(s.studentName)} · Class ${escapeHTML(s.class)} · Roll ${escapeHTML(s.roll)} · ${escapeHTML(s.time)}</p>
+          <p><b>Options:</b><br>${opts.map((o,i)=>`${i+1}. ${escapeHTML(o)}`).join("<br>")}</p>
+          <p><b>Correct Answer:</b> ${escapeHTML(correct)}</p>
+          ${status==="pending"?`<button class="success" onclick="approveQuestion('${s.id}')">✅ Approve & Add to Quiz</button><button class="danger" onclick="rejectQuestion('${s.id}')">❌ Reject</button>`:""}
+          <button class="gray" onclick="deleteSubmission('${s.id}')">🗑️ Delete</button>
+        </div>`;
+      }).join("");
+    }
+
+    const rBox=document.getElementById("adminReviews");
+    if(!reviews.length){ rBox.innerHTML='<div class="note">⭐ No reviews yet.</div>'; }
+    else{
+      const avg=reviews.reduce((a,s)=>a+Number(s.rating||0),0)/reviews.length;
+      rBox.innerHTML=`<div class="note"><b>Average Rating:</b> ${avg.toFixed(1)} / 5 ⭐ · ${reviews.length} review(s)</div>`+
+      reviews.slice().reverse().map(s=>`<div class="review-card">
+        <div class="rating">${"⭐".repeat(Number(s.rating)||0)}${"☆".repeat(5-(Number(s.rating)||0))}</div>
+        <p><span class="review-label">${escapeHTML(s.studentName)}</span> · Class ${escapeHTML(s.class)} · Roll ${escapeHTML(s.roll)}</p>
+        <p>${escapeHTML(s.review)}</p><small>${escapeHTML(s.time)}</small>
+        <br><button class="danger" onclick="deleteSubmission('${s.id}')">🗑️ Delete Review</button>
+      </div>`).join("");
+    }
+
+    const iBox=document.getElementById("adminIdeas");
+    const ideas=submissions.filter(s=>s.things);
+    if(!ideas.length){ iBox.innerHTML='<div class="note">💡 No ideas submitted yet.</div>'; }
+    else iBox.innerHTML=ideas.slice().reverse().map(s=>`<div class="review-card"><p><b>${escapeHTML(s.studentName)}</b> · Class ${escapeHTML(s.class)} · Roll ${escapeHTML(s.roll)}</p><p>${escapeHTML(s.things)}</p><small>${escapeHTML(s.time)}</small></div>`).join("");
+}
+
+function approveSubmission(index){
+    const item=submissions[index];
+    if(!item) return;
+
+    // NEVER approve automatically: this function is called only by the Admin button.
+    if(!Array.isArray(item.options) || item.options.length!==4 || item.correctAnswer===undefined){
+        alert("❌ This submission is not a valid 4-option question.");
+        return;
+    }
+
+    const answerIndex=Number(item.correctAnswer);
+    if(!Number.isInteger(answerIndex) || answerIndex<0 || answerIndex>3){
+        alert("❌ The correct answer is invalid.");
+        return;
+    }
+
+    const approved={
+        id:Date.now()+Math.random(),
+        q:String(item.question || "").trim(),
+        options:item.options.map(x=>String(x)),
+        answer:answerIndex,
+        approved:true,
+        approvedBy:"Aayup Sunar",
+        approvedAt:new Date().toISOString(),
+        submittedBy:item.submittedBy || item.name || "Student"
+    };
+
+    if(!approved.q || approved.options.some(x=>!x.trim())){
+        alert("❌ Please check the question and all four options.");
+        return;
+    }
+
+    approvedQuestions=getApprovedQuestions();
+    approvedQuestions.push(approved);
+    saveApprovedQuestions();
+
+    // Mark the original submission as approved rather than deleting it.
+    item.status="approved";
+    item.approvedBy="Aayup Sunar";
+    item.approvedAt=new Date().toISOString();
+    submissions[index]=item;
+    saveSubmissions();
+
+    alert("✅ Question approved by Admin and added to the General Round.");
+    renderAdminSubmissions();
+}
+
+function rejectQuestion(id){
+    if(!isAdmin)return;
+    const s=submissions.find(x=>String(x.id)===String(id));
+    if(!s)return;
+    s.questionStatus="rejected";
+    saveSubmissions();
+    renderAdminSubmissions();
+    alert("❌ Question rejected.");
+}
+
+function deleteSubmission(id){
+    if(!isAdmin)return;
+    if(!confirm("Delete this submission/review permanently from this browser?"))return;
+    submissions=submissions.filter(s=>String(s.id)!==String(id));
+    approvedQuestions=approvedQuestions.filter(q=>String(q.sourceId)!==String(id));
+    saveSubmissions();
+    saveApprovedQuestions();
+    renderAdminSubmissions();
+}
+
+/* =====================================================
+MULTIPLAYER
+===================================================== */
+
+const multiplayerQuestions=[
+    ...generalQuestions,
+    ...rapidQuestions,
+    {
+        q:"Which is the largest planet in our solar system?",
+        options:["Earth","Jupiter","Mars","Venus"], answer:1
+    },
+    {
+        q:"Which instrument is used to measure temperature?",
+        options:["Barometer","Thermometer","Compass","Ruler"], answer:1
+    },
+    {
+        q:"How many sides does an octagon have?",
+        options:["6","7","8","9"], answer:2
+    },
+    {
+        q:"Which metal is liquid at room temperature?",
+        options:["Iron","Copper","Mercury","Aluminium"], answer:2
+    },
+    {
+        q:"What is the chemical symbol for oxygen?",
+        options:["O","Ox","C","H"], answer:0
+    },
+    {
+        q:"Which ocean lies between Africa and Australia?",
+        options:["Atlantic","Indian","Arctic","Pacific"], answer:1
+    },
+    {
+        q:"Which part of a computer displays pictures?",
+        options:["Keyboard","Monitor","Mouse","CPU"], answer:1
+    },
+    {
+        q:"What is 15 × 6?",
+        options:["80","90","100","75"], answer:1
+    },
+    {
+        q:"Which planet is known for its Great Red Spot?",
+        options:["Saturn","Jupiter","Mars","Neptune"], answer:1
+    },
+    {
+        q:"Which gas is most abundant in Earth's atmosphere?",
+        options:["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"], answer:1
+    },
+    {
+        q:"Who wrote the play Romeo and Juliet?",
+        options:["William Shakespeare","Charles Dickens","Mark Twain","Leo Tolstoy"], answer:0
+    },
+    {
+        q:"Which is the hardest natural substance?",
+        options:["Gold","Iron","Diamond","Silver"], answer:2
+    },
+    {
+        q:"What is 1000 ÷ 10?",
+        options:["10","100","1000","1"], answer:1
+    },
+    {
+        q:"Which country has the city of Tokyo?",
+        options:["China","Japan","South Korea","Thailand"], answer:1
+    },
+    {
+        q:"Which organ is mainly responsible for breathing?",
+        options:["Heart","Lungs","Kidney","Stomach"], answer:1
+    },
+    {
+        q:"What is the freezing point of water in Celsius?",
+        options:["0°C","10°C","50°C","100°C"], answer:0
+    }
+];
+
+let multiplayerLocked=false;
+
+function startMultiplayer(){
+
+    hideAll();
+
+    document.getElementById("multiplayerPage").classList.remove("hidden");
+
+    let students=users.filter(u=>u.type==="student");
+    let box=document.getElementById("multiContent");
+
+    if(students.length<2){
+        box.innerHTML=`
+        <h2>👥 Multiplayer</h2>
+        <p>At least 2 registered students are required.</p>
+        `;
+        return;
+    }
+
+    box.innerHTML=`
+    <h2>👥 Multiplayer Challenge</h2>
+    <p>Choose an opponent and answer the questions.</p>
+
+    <label class="required-label">Opponent</label>
+    <select id="multiPlayer">
+    ${students.filter(u=>String(u.id)!==String(currentUser.id)).map(
+        u=>`<option value="${u.id}">${escapeHTML(u.name)}</option>`
+    ).join("")}
+    </select>
+
+    <button onclick="playMultiplayerQuestion()">🚀 Start Match</button>
+    <div id="multiQuestion"></div>
+    `;
+}
+
+function playMultiplayerQuestion(){
+
+    if(multiplayerLocked)return;
+
+    let q=multiplayerQuestions[
+        Math.floor(Math.random()*multiplayerQuestions.length)
+    ];
+
+    let box=document.getElementById("multiQuestion");
+
+    box.innerHTML=`
+    <div class="question-box">
+    <p>⚔️ One-question multiplayer challenge</p>
+    <h2>${escapeHTML(q.q)}</h2>
+    ${q.options.map((x,i)=>`
+        <button class="option" onclick="multiAnswer(${i},${q.answer})">
+        ${escapeHTML(x)}
+        </button>
+    `).join("")}
+    </div>
+    `;
+}
+
+function showGameAnimation(win, message, callback){
+
+    const overlay=document.createElement("div");
+    overlay.className="anim-overlay";
+
+    overlay.innerHTML=`
+    <div class="anim-box">
+        <div class="anim-emoji">${win?"🏆":"😢"}</div>
+        <div class="anim-title ${win?"win-title":"lose-title"}">
+            ${win?"YOU WIN!":"YOU LOSE!"}
+        </div>
+        <p style="font-size:20px">${escapeHTML(message)}</p>
+        <button class="${win?"success":"danger"}" id="animContinue">
+            Continue
+        </button>
+    </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    document.getElementById("animContinue").onclick=()=>{
+        overlay.remove();
+        if(callback)callback();
+    };
+}
+
+function multiAnswer(selected,correct){
+
+    if(multiplayerLocked)return;
+    multiplayerLocked=true;
+
+    const win=selected===correct;
+
+    if(win){
+        currentUser.books=(currentUser.books||0)+10;
+        saveCurrentUser();
+
+        showGameAnimation(
+            true,
+            "🎉 Correct answer! +10 Books.",
+            ()=>{
+                multiplayerLocked=false;
+                showDashboard();
+            }
+        );
+    }
+    else{
+        showGameAnimation(
+            false,
+            "Wrong answer. Better luck next time!",
+            ()=>{
+                multiplayerLocked=false;
+                showDashboard();
+            }
+        );
+    }
+}
+
+
+/* =====================================================
+DELETE ACCOUNT
+===================================================== */
+
+function deleteMyAccount(){
+
+    if(!currentUser)return;
+
+
+    let first=confirm(
+        "⚠️ DELETE MY ACCOUNT\n\n"+
+        "Delete "+
+        currentUser.name+
+        "'s account permanently?"
+    );
+
+
+    if(!first)return;
+
+
+    let second=prompt(
+        "Type DELETE to confirm account deletion."
+    );
+
+
+    if(second!=="DELETE"){
+
+        alert(
+            "❌ Account deletion cancelled."
+        );
+
+        return;
+    }
+
+
+    let deletedID=currentUser.id;
+
+
+    users.forEach(
+        user=>{
+
+            if(Array.isArray(user.friends)){
+
+                user.friends=
+                    user.friends.filter(
+                        id=>
+                        String(id)!==
+                        String(deletedID)
+                    );
+
+            }
+
+        }
+    );
+
+
+    users=users.filter(
+        u=>
+        String(u.id)!==
+        String(deletedID)
+    );
+
+
+    saveUsers();
+
+
+    Object.keys(localStorage).forEach(
+        key=>{
+
+            if(
+                key.startsWith("gargi_chat_") &&
+                key.includes(String(deletedID))
+            ){
+
+                localStorage.removeItem(key);
+
+            }
+
+        }
+    );
+
+
+    currentUser=null;
+
+    chatFriend=null;
+
+
+    alert(
+        "✅ Your account has been deleted."
+    );
+
+
+    showAuth();
+
+    showRegister();
+}
+
+
+/* =====================================================
+ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value){
+
+    return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+
+/* =====================================================
+LOGOUT
+===================================================== */
+
+function logout(){
+
+    currentUser=null;
+    chatFriend=null;
+    isAdmin=false;
+
+    showAuth();
+    showLogin();
+}
+
+
+/* =====================================================
+FIX EXISTING DATA
+===================================================== */
+
+users.forEach(
+    user=>{
+
+        if(!Array.isArray(user.friends))
+            user.friends=[];
+
+
+        if(typeof user.books!=="number")
+            user.books=0;
+
+
+        if(typeof user.diamonds!=="number")
+            user.diamonds=0;
+
+        if(typeof user.lastTeacherQuiz!=="number")
+            user.lastTeacherQuiz=0;
+
+    }
+);
+
+saveUsers();
+
+
+/* =====================================================
+START
+===================================================== */
+
+showRegister();
+
+setInterval(()=>{
+    if(currentUser && !document.getElementById("dashboard").classList.contains("hidden")){
+        updateTeacherCooldown();
+    }
+},60000);
+
+</script>
+
+</body>
+</html>
